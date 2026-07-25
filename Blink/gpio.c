@@ -8,6 +8,3 @@ void gpio_init(void) {
     GPIOA->ODR |= (1 << PIN5);
 }
 
-void gpio_toggle(void) {
-
-}
