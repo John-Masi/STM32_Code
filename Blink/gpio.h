@@ -18,7 +18,6 @@ typedef struct {
 #define PIN5 5
 
 void gpio_init(void);
-void toggle_led(void);
 
 typedef struct {
     volatile uint32_t CR;
