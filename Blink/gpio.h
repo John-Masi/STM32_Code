@@ -31,3 +31,5 @@ typedef struct {
 #define GPIOAEN 0
 
 #endif
+
+uint8_t flag = 0;
