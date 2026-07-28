@@ -1,5 +1,5 @@
-#include "timer.h"
-#include "gpio.h"
+#include "include/timer.h"
+#include "include/gpio.h"
 
 volatile uint32_t ticks;
 
