@@ -2,6 +2,8 @@
 
 void USART::USART_init (void) {
     RCC->APB2ENR |= (1 << USART1EN);
+
+    USART_1->BRR = (104 << 4) | 3;
     USART_1->CR1 |= (1 << CR1::RE);
     USART_1->CR1 |= (1 << CR1::TE);
     USART_1->CR1 &= ~(1 << CR1::M);
