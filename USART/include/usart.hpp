@@ -44,6 +44,8 @@ class USART {
             USART_init();
         }
 
+        std::array<char, 32> buffer;
+
         void USART_init(void);
         char get_char(void);
         void send_str(std::string_view s);
@@ -52,9 +54,9 @@ class USART {
         void array_to_str(char * buff);
         void enable_interrupt(USART_Typedef* usart);
         bool parse_string(std::string_view string);
+        USART_Typedef* getPerph() { return usart; }
 
     private:
-        std::array<char, 32> buffer;
         USART_Typedef* usart{nullptr};
 };
 
