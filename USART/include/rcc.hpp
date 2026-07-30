@@ -12,9 +12,7 @@ struct RCC_Typedef {
 }; 
 
 #define RCC ((RCC_Typedef *)0x40023800)
-#define USART1EN 4
 #define GPIOAEN 0
 #define GPIOCEN 2
-#define USART2EN 17
 
 #endif 

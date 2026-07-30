@@ -35,6 +35,7 @@ struct USART_Typedef {
     volatile uint32_t CR1;
 };
 #define USART2 ((USART_Typedef *)0x4004400)
+#define USART2EN 17
 
 class USART {
     public:
@@ -50,9 +51,10 @@ class USART {
         void get_string(uint8_t maxSize);
         void array_to_str(char * buff);
         void enable_interrupt(USART_Typedef* usart);
+        bool parse_string(std::string_view string);
 
     private:
-        std::array<uint8_t, 32> buffer;
+        std::array<char, 32> buffer;
         USART_Typedef* usart{nullptr};
 };
 

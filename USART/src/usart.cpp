@@ -61,3 +61,11 @@ void USART::enable_interrupt(USART_Typedef* usart) {
         usart->CR1 &= ~(1 << 8);
     }
 }
+
+bool USART::parse_string(std::string_view string) {
+    if(!(string == std::string_view(buffer.data()))) {
+        return 1;
+    }
+
+    return 0;
+}
