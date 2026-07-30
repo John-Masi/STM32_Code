@@ -38,7 +38,8 @@ struct USART_Typedef {
 
 class USART {
     public:
-        USART() {
+        USART(USART_Typedef* usart_param) {
+            usart = usart_param;
             USART_init();
         }
 
@@ -48,10 +49,11 @@ class USART {
         void send_char(char c);
         void get_string(uint8_t maxSize);
         void array_to_str(char * buff);
-        bool isEqual(std::string_view s);
+        void enable_interrupt(USART_Typedef* usart);
 
     private:
         std::array<uint8_t, 32> buffer;
+        USART_Typedef* usart{nullptr};
 };
 
 #endif 

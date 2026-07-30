@@ -1,29 +1,29 @@
 #include "../include/usart.hpp"
 
 void USART::USART_init (void) {
-    RCC->APB2ENR |= (1 << USART1EN);
+    RCC->APB1ENR |= (1 << USART2EN);
 
-    USART2->BRR = (104 << 4) | 3;
-    USART2->CR1 |= (1 << CR1::RE);
-    USART2->CR1 |= (1 << CR1::TE);
-    USART2->CR1 &= ~(1 << CR1::M);
+    usart->BRR = 138;
+    usart->CR1 |= (1 << CR1::RE);
+    usart->CR1 |= (1 << CR1::TE);
+    usart->CR1 |= (1 << CR1::UE);
 }
 
 char USART::get_char(void) {
-    while(!(USART2->SR & (1 << 5))) {
+    while(!(usart->SR & (1 << 5))) {
 
     }
 
-    char c = USART2->DR;
+    char c = usart->DR;
     return c;
 }
 
 void USART::send_char(char c) {
-    while(!(USART2->SR & (1 << SR::TXE))) {
+    while(!(usart->SR & (1 << SR::TXE))) {
 
     }
 
-    USART2->DR = c;
+    usart->DR = c;
 }
 
 void USART::send_str(std::string_view s) {
@@ -51,6 +51,13 @@ void USART::get_string(uint8_t maxSize) {
 
 } 
 
-bool USART::isEqual(std::string_view s) {
-    
+void USART::enable_interrupt(USART_Typedef* usart) {
+    if(!(usart->CR1 & (1 << 7) && (usart->CR1 & (1 << 8)))) {
+        usart->CR1 |= (1 << 7);
+        usart->CR1 |= (1 << 8);
+    }
+    else {
+        usart->CR1 &= ~(1 << 7);
+        usart->CR1 &= ~(1 << 8);
+    }
 }

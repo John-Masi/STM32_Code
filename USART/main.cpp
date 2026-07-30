@@ -2,7 +2,7 @@
 #include "include/gpio.hpp"
 
 int main() {
-    USART usart;
+    USART usart(USART2);
     GPIO gpio;
 
     while(1) {

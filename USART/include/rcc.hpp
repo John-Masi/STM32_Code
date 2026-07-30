@@ -6,7 +6,8 @@
 struct RCC_Typedef {
     volatile uint32_t r0[12];
     volatile uint32_t AHB1ENR;
-    volatile uint32_t r1[4];
+    volatile uint32_t r1[3];
+    volatile uint32_t APB1ENR;
     volatile uint32_t APB2ENR;
 }; 
 
@@ -14,5 +15,6 @@ struct RCC_Typedef {
 #define USART1EN 4
 #define GPIOAEN 0
 #define GPIOCEN 2
+#define USART2EN 17
 
 #endif 
