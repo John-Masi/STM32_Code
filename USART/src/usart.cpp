@@ -3,24 +3,27 @@
 void USART::USART_init (void) {
     RCC->APB2ENR |= (1 << USART1EN);
 
-    USART_1->BRR = (104 << 4) | 3;
-    USART_1->CR1 |= (1 << CR1::RE);
-    USART_1->CR1 |= (1 << CR1::TE);
-    USART_1->CR1 &= ~(1 << CR1::M);
+    USART2->BRR = (104 << 4) | 3;
+    USART2->CR1 |= (1 << CR1::RE);
+    USART2->CR1 |= (1 << CR1::TE);
+    USART2->CR1 &= ~(1 << CR1::M);
 }
 
 char USART::get_char(void) {
-    char c = USART_1->DR;
+    while(!(USART2->SR & (1 << 5))) {
 
+    }
+
+    char c = USART2->DR;
     return c;
 }
 
 void USART::send_char(char c) {
-    while(!(USART_1->SR & (1 << SR::TXE))) {
+    while(!(USART2->SR & (1 << SR::TXE))) {
 
     }
 
-    USART_1->DR = c;
+    USART2->DR = c;
 }
 
 void USART::send_str(std::string_view s) {

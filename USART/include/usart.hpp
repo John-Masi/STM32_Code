@@ -34,7 +34,7 @@ struct USART_Typedef {
     volatile uint32_t BRR;
     volatile uint32_t CR1;
 };
-#define USART_1 ((USART_Typedef *)0x4001100)
+#define USART2 ((USART_Typedef *)0x4004400)
 
 class USART {
     public:
