@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <array>
 #include "rcc.hpp"
 
 #ifndef GPIO_HPP
@@ -19,16 +20,18 @@ struct GPIO_Typedef {
 
 class GPIO {
     public:
-        GPIO(GPIO_Typedef* gpio) {
-            gpio_init(gpio);
+        GPIO(GPIO_Typedef* gp) {
+            set_gpio(gp);
+            gpio_init();
         }
-        void gpio_init(GPIO_Typedef* gpio);
-        void set(void);
-        void clear(void);
-        void toggle(void);
+        void gpio_init(void);
+        void set_gpio(GPIO_Typedef* gpio);
+        void set_pin(uint8_t pin);
+        void clear_pin(uint8_t pin);
+        void toggle_pin(uint8_t pin);
 
-    private:
-
+    private:    
+        mutable GPIO_Typedef* gpio{nullptr};
 };
 
 #endif 
