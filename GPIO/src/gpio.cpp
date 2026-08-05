@@ -24,3 +24,22 @@ void GPIO::button_init(void) {
 
     NVIC->ISER0[1] |= (1 << 8);
 }
+
+// Turn off all gpiob pins
+void GPIO::turn_off(void) {
+    for(int i = 0; i < 4; i++) {
+        GPIOB->ODR &= ~(1 << i);
+    }
+}
+
+// Turn on all 4 gpiob pins 
+void GPIO::turn_on(void) {
+    for(int i = 0; i < 4; i++) {
+        GPIOB->ODR |= (1 << i);
+    }
+}
+
+void GPIO::led_on(uint8_t pin) {
+    GPIOB->ODR &= (1 << pin);
+    GPIOB->ODR |= (1 << pin);
+}

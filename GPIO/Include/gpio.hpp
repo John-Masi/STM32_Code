@@ -41,6 +41,10 @@ class GPIO {
 
         void button_init(void); // Init for cascading-leds
 
+        void turn_off(void);
+        void turn_on(void);
+        void led_on(uint8_t pin);
+
     private:
 
 };
