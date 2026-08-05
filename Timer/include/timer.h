@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "rcc.h"
-#include "nvic.h"
+#include "../syscfg-nvic-rcc/include/rcc.hpp"
+#include "../syscfg-nvic-rcc/include/nvic.hpp"
 
 #pragma once 
 
@@ -24,5 +24,5 @@ void timer_init(void) {
     TIM2->CR1 |= (1 << 0);
     TIM2->DIER |= (1 << 0);
 
-    NVIC->ISER[0] |= (1 << 28);
+    NVIC->ISER0[0] |= (1 << 28);
 }

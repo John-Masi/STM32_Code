@@ -6,7 +6,10 @@
 struct RCC_Typedef {
     volatile uint32_t r0[12];
     volatile uint32_t AHB1ENR;
-    volatile uint32_t r1[4];
+    volatile uint32_t AHB2ENR;
+    volatile uint32_t AHB3ENR;
+    volatile uint32_t r;
+    volatile uint32_t APB1ENR;
     volatile uint32_t APB2ENR;
 }; 
 
