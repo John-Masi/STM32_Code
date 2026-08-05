@@ -10,20 +10,17 @@ void USART::USART_init (void) {
 }
 
 char USART::get_char(void) {
-    while(!(usart->SR & (1 << 5))) {
-
-    }
-
     char c = usart->DR;
     return c;
 }
 
 void USART::send_char(char c) {
-    while(!(usart->SR & (1 << SR::TXE))) {
-
+    tx_buffer[tx_head++] = c;
+    if(tx_head >= 32) {
+        tx_head = 0;
     }
 
-    usart->DR = c;
+    usart->CR1 |= (1 << 7);
 }
 
 void USART::send_str(std::string_view s) {

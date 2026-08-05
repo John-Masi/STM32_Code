@@ -1,4 +1,4 @@
-#include "../include/gpio.hpp"
+#include "../Include/gpio.hpp"
 
 void GPIO::gpio_init(void) {
     RCC->AHB1ENR |= (1 << GPIOAEN) | (1 << GPIOCEN);

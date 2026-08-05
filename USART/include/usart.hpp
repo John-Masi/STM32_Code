@@ -4,7 +4,7 @@
 #include <string.h>
 #include <array>
 #include <string_view>
-#include "rcc.hpp"
+#include "../syscfg-nvic-rcc/include/rcc.hpp"
 
 #ifndef USART_HPP
 #define USART_HPP
@@ -45,6 +45,13 @@ class USART {
         }
 
         std::array<char, 32> buffer;
+        std::array<char ,32> tx_buffer;
+
+        uint8_t tx_head;
+        uint8_t tx_tail;
+
+        uint8_t rx_head;
+        uint8_t rx_tail;
 
         void USART_init(void);
         char get_char(void);
