@@ -1,5 +1,8 @@
 #include <cstdint>
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
+#include "../syscfg-nvic-rcc/include/nvic.hpp"
+#include "../syscfg-nvic-rcc/include/syscfg.hpp"
+#include "../syscfg-nvic-rcc/include/exti.hpp"
 
 #ifndef GPIO_HPP
 #define GPIO_HPP
@@ -20,14 +23,23 @@ struct GPIO_Typedef {
 };
 
 #define GPIOA ((GPIO_Typedef *)0x40020200)
+#define GPIOB ((GPIO_Typedef *)0X40020400)
+#define GPIOC ((GPIO_Typedef *)0X40020800)
+
 #define GPIOAEN 0
+#define GPIOBEN 1
+#define GPIOCEN 2
+#define SYSCFGEN 14
+#define BTTN_PIN ~(3 << (13 * 2))
 
 class GPIO {
     public:
         GPIO() {
-            gpio_init();
+            //gpio_init();
         }
         void gpio_init(void);
+
+        void button_init(void); // Init for cascading-leds
 
     private:
 
