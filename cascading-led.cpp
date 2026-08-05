@@ -16,6 +16,8 @@ void EXTI15_10_IRQHandler() {
 }
 
 int main() {
+    GPIO gpio;
+    gpio.button_init();
     while(1) {
         if(bp) {
             led_cnt++;
