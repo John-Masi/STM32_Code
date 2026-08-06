@@ -21,16 +21,6 @@
 #define START (1 << 0)
 #define STOP ~(1 << 0)
 
-void timer_init(void) {
-    RCC->APB1ENR |= (1 << 0);
-    TIM2->PSC = 1024;
-    TIM2->ARR = 15624;
-    TIM2->CR1 |= (1 << 0);
-    TIM2->DIER |= (1 << 0);
-
-    NVIC->ISER0[0] |= (1 << NVIC_TIM2);
-}
-
 class Timer {
     public:
         Timer(const TIM_TypeDef* tim,uint8_t psc, uint16_t arr) {
