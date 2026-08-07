@@ -1,6 +1,7 @@
 #include <cstdint>
 
-#pragma once 
+#ifndef TYPEDEF_HPP
+#define TYPEDEF_HPP
 
 struct TIM_TypeDef {
     volatile uint32_t CR1;
@@ -17,3 +18,5 @@ struct TIM_TypeDef {
 #define NVIC_TIM2 28
 #define START (1 << 0)
 #define STOP ~(1 << 0)
+
+#endif
