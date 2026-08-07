@@ -9,7 +9,7 @@ static volatile uint8_t bp{};
 static volatile uint8_t max_led{4};
 static volatile uint8_t led_cnt{}; 
 
-void EXTI15_10_IRQHandler() {
+extern "C" void EXTI15_10_IRQHandler() {
     bp = 1;
     EXTI->PR |= (1 << 13);
 

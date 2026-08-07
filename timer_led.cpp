@@ -8,7 +8,7 @@ static volatile uint8_t count{};
 
 static Timer timer(TIM2,1024,15624);
 
-void EXTI15_10_IRQHandler(void) {
+extern "C" void EXTI15_10_IRQHandler(void) {
     if(timer.TIM->SR & (1 << 0)) {
         timer.TIM->SR &= ~(1 << 0);
         ticks++;
