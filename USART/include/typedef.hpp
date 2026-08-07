@@ -1,6 +1,7 @@
 #include <cstdint>
 
-#pragma once 
+#ifndef TYPEDEF_HPP
+#define TYPEDEF_HPP
 
 enum SR : uint8_t {
     PE,
@@ -30,3 +31,5 @@ struct USART_Typedef {
 
 #define USART2 ((USART_Typedef *)0x4004400)
 #define USART2EN 17
+
+#endif 

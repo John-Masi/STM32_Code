@@ -1,6 +1,7 @@
 #include <cstdint>
 
-#pragma once 
+#ifndef TYPEDEF_HPP
+#define TYPEDEF_HPP
 
 struct GPIO_Typedef {
     volatile uint32_t MODER;
@@ -26,3 +27,5 @@ struct GPIO_Typedef {
 #define GPIOCEN 2
 #define SYSCFGEN 14
 #define BTTN_PIN ~(3 << (13 * 2))
+
+#endif 

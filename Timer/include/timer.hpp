@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "typedef.h"
+#include "typedef.hpp"
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
 #include "../syscfg-nvic-rcc/include/nvic.hpp"
 

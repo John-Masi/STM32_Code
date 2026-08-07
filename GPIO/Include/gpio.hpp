@@ -1,6 +1,6 @@
 #include <cstdint>
 #include <array> 
-#include "typedef.h"
+#include "typedef.hpp"
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
 #include "../syscfg-nvic-rcc/include/nvic.hpp"
 #include "../syscfg-nvic-rcc/include/syscfg.hpp"

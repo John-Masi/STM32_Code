@@ -4,7 +4,7 @@
 #include <string.h>
 #include <array>
 #include <string_view>
-#include "typedef.h"
+#include "typedef.hpp"
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
 
 #ifndef USART_HPP
