@@ -1,4 +1,5 @@
-#include <stdint.h>
+#include <cstdint>
+#include <memory>
 #include "typedef.hpp"
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
 #include "../syscfg-nvic-rcc/include/nvic.hpp"
@@ -8,22 +9,22 @@
 
 class Timer {
     public:
-        Timer(const TIM_TypeDef* tim,uint8_t psc, uint16_t arr) {
-            *TIM = *tim;
-            tim = nullptr;
+        Timer(const TIM_TypeDef* t,uint8_t p, uint16_t a) :  
+        tim(std::make_unique<TIM_TypeDef>(t)),psc(p), arr(a) {};
 
-            RCC->APB1ENR |= (1 << 0);
-            TIM->PSC = psc;
-            TIM->ARR = arr;
-            NVIC->ISER0[0] |= (1 << NVIC_TIM2);
-
-        };
-
+        void timer_init(TIMNPOS pos);
         void start_timer(void);
         void stop_timer(void);
         
+        // Prescaler value 
+        uint16_t psc{};
 
-        TIM_TypeDef* TIM{nullptr};
+        // Max upcount value
+        uint16_t arr{};
+
+        // Ptr to the desired timer
+        std::unique_ptr<TIM_TypeDef> tim;
+
     private:
 };
 
