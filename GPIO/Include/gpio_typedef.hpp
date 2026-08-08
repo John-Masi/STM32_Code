@@ -1,7 +1,7 @@
 #include <cstdint>
 
-#ifndef TYPEDEF_HPP
-#define TYPEDEF_HPP
+#ifndef GPIO_TYPEDEF_HPP
+#define GPIO_TYPEDEF_HPP
 
 struct GPIO_Typedef {
     volatile uint32_t MODER;
@@ -18,9 +18,9 @@ struct GPIO_Typedef {
     volatile uint32_t AFRH;
 };
 
-#define GPIOA ((GPIO_Typedef *)0x40020200)
-#define GPIOB ((GPIO_Typedef *)0X40020400)
-#define GPIOC ((GPIO_Typedef *)0X40020800)
+#define GPIOA 0x40020200
+#define GPIOB 0X40020400
+#define GPIOC 0X40020800
 
 #define GPIOAEN 0
 #define GPIOBEN 1
