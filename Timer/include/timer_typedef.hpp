@@ -1,7 +1,7 @@
 #include <cstdint>
 
-#ifndef TYPEDEF_HPP
-#define TYPEDEF_HPP
+#ifndef TIMER_TYPEDEF_HPP
+#define TIMER_TYPEDEF_HPP
 
 struct TIM_TypeDef {
     volatile uint32_t CR1;
