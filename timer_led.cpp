@@ -20,7 +20,7 @@ void delay(int delay) {
 }
 
 int main() {
-    GPIO gpio;
+    GPIO<GPIOB> gpio;
     gpio.button_init();
 
     timer.start_timer();
