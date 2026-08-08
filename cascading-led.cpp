@@ -16,7 +16,7 @@ extern "C" void EXTI15_10_IRQHandler() {
 }
 
 int main() {
-    GPIO gpio;
+    GPIO<GPIOB> gpio;
     gpio.button_init();
     while(1) {
         if(bp) {
