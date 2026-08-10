@@ -1,5 +1,6 @@
 #include "../include/i2c.hpp"
 
-void I2C::i2c_init(void) {
+template <uintptr_t BASE>
+void I2C<BASE>::i2c_init(void) {
     
 }
