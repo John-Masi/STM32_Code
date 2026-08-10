@@ -1,9 +1,16 @@
-#include "../timer.hpp"
+#include "../include/timer.hpp"
 
-void Timer::start_timer(void) {
+template <uintptr_t BASE> 
+void Timer<BASE>::start_timer(void) {
     tim->CR1 |= START;
 }
 
-void Timer::stop_timer(void) {
+template <uintptr_t BASE> 
+void Timer<BASE>::stop_timer(void) {
     tim->CR1 &= STOP;
+}
+
+template <uintptr_t BASE> 
+void Timer<BASE>::enable_dma(void) {
+    tim->DIER |= (1 << 8);
 }

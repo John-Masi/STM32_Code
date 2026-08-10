@@ -1,31 +1,33 @@
 #include <cstdint>
 #include <memory>
-#include "typedef.hpp"
+#include "timer_typedef.hpp"
 #include "../syscfg-nvic-rcc/include/rcc.hpp"
 #include "../syscfg-nvic-rcc/include/nvic.hpp"
 
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
+
+template <uintptr_t BASE>
 class Timer {
     public:
-        Timer(const TIM_TypeDef* t,uint8_t p, uint16_t a) :  
-        tim(std::make_unique<TIM_TypeDef>(t)),psc(p), arr(a) {};
 
-        void timer_init(TIMNPOS pos);
+        Timer(uint8_t p, uint16_t a) {
+            timer->PSC = p;
+            timer->ARR = a;
+        };
+
         void start_timer(void);
         void stop_timer(void);
-        
-        // Prescaler value 
-        uint16_t psc{};
+        void enable_dma(void);
 
-        // Max upcount value
-        uint16_t arr{};
-
-        // Ptr to the desired timer
-        std::unique_ptr<TIM_TypeDef> tim;
+        template <uintptr_t BASE>
+        static TIM_TypeDef func(const Timer<BASE>& t) {
+            return t.timer;
+        }
 
     private:
+        static constexpr auto timer = reinterpret_cast<TIM_TypeDef*>(BASE);
 };
 
 #endif 

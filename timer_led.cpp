@@ -6,11 +6,16 @@ static volatile uint8_t led_cnt{};
 static volatile uint8_t max_led{4};
 static volatile uint8_t count{};
 
-static Timer timer(TIM2,1024,15624);
+static Timer<TIM2> timer(1024,15624);
+
+template <uintptr_t BASE>
+static TIM_TypeDef* func(const Timer<BASE>& t) {
+    return t.timer;
+}
 
 extern "C" void EXTI15_10_IRQHandler(void) {
-    if(timer.TIM->SR & (1 << 0)) {
-        timer.TIM->SR &= ~(1 << 0);
+    if(func(timer)->SR & (1 << 0)) {
+        func(timer)->SR &= ~(1 << 0);
         ticks++;
     }
 };
