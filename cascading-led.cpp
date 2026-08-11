@@ -1,4 +1,5 @@
 #include "GPIO/Include/gpio.hpp"
+#include "GPIO/Include/leds.hpp"
 
 // How the program works
 // Using PA13 (The GPIOA pin for USER button)
@@ -16,7 +17,7 @@ extern "C" void EXTI15_10_IRQHandler() {
 }
 
 int main() {
-    GPIO<GPIOB> gpio;
+    LEDS<GPIOB,GPIOC> gpio;
     gpio.button_init();
     while(1) {
         if(bp) {

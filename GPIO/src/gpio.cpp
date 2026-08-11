@@ -1,36 +1,53 @@
 #include "../Include/gpio.hpp"
 
-void GPIO<GPIOB>::button_init(void) {
-    RCC->AHB1ENR |= (1 << GPIOBEN); 
-    RCC->AHB1ENR |= (1 << GPIOCEN);
-    RCC->APB2ENR |= (1 << SYSCFGEN);
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::pin_on(void) {
+    gpio->ODR |= (1 << PIN);
+}
 
-    GPIOC->MODER &= BTTN_PIN;
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::pin_off(void) {
+    gpio->ODR &= ~(1 << PIN);
+}
 
-    for(int i = 0; i < 3; i++) {
-        gpio->MODER |= (1 << (i * 2));
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::open_drain(void) {
+    gpio->OTYPER |= (1 << PIN);
+}
+
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::push_pull(void) {
+    gpio->OTYPER &= ~(1 << PIN_POS);
+}
+
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::pullup_en(void) {
+    gpio->PUPDR |= (0b01 << PIN_POS);
+}
+
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::pulldown_en(void) {
+    gpio->PUPDR |= (0b10 << PIN_POS);
+}
+
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::alternate_func(void) {
+    gpio->MODER &= ~(3 << PIN_POS);
+    gpio->MODER |= (2 << PIN_POS);
+
+    // Check if pin is in  AFRL index
+    if(PIN <= 7) {
+        gpio->AFRL &= ~(0xF << PIN_POS);
+        gpio->AFRL |= (4 << PIN_POS);
     }
-
-    SYSCFG->EXTICR4 |= (0x2 << 4);
-
-    EXTI->IMR |= (1 << 13);
-    EXTI->FTSR |= (1 << 13);
-
-    NVIC->ISER0[1] |= (1 << 8);
-}
-
-void GPIO<GPIOB>::turn_off(void) {
-    for(int i = 0; i < 4; i++) {
-        gpio->ODR &= ~(1 << i);
+    else if (PIN > 7){
+        gpio->AFRH &= ~(0xFF << PIN_POS);
+        gpio->AFRH |= (4 << ((PIN_POS - 8) * 2) );
     }
 }
 
-void GPIO<GPIOB>::turn_on(void) {
-    for(int i = 0; i < 4; i++) {
-        gpio->ODR |= (1 << i);
-    }
+template <uintptr_t BASE,uint8_t PIN>
+void GPIO<BASE,PIN>::set_output(void) {
+    gpio->MODER |= (0b01 << PIN_POS);
 }
-void GPIO<GPIOB>::led_on(uint8_t pin) {
-    gpio->ODR &= (1 << pin);
-    gpio->ODR |= (1 << pin);
-}
+
