@@ -6,15 +6,30 @@
 #ifndef HTU31_HPP
 #define HTU31_HPP
 
+// Macros for GPIOB pins 8,9
 #define PIN9 9
 #define PIN9MOD_CLR ~(3 << (PIN9 * 2)) 
 #define PIN9ALT_SET (2 << (PIN9 * 2))
 #define PIN9AF_INDEX (PIN9 - 8)
+#define PIN9AF_CLR ~(0xF << (PIN9AF_INDEX * 4))
+#define PIN9AF_SET (4 << (PIN9AF_INDEX * 4))
 
 #define PIN8 8
 #define PIN8MOD_CLR ~(3 << (PIN8 * 2)) 
 #define PIN8ALT_SET (2 << (PIN8 * 2))
 #define PIN8AF_INDEX (PIN8 - 8)
+#define PIN8AF_CLR ~(0xF << (PIN8AF_INDEX * 4))
+#define PIN8AF_SET (4 << (PIN8AF_INDEX * 4))
+
+
+// Macros for I2C reg
+#define START (1 << 8)
+#define STOP (1 << 9)
+#define START_WAIT (1 << 0)
+#define ADDR_WAIT (1 << 1)
+#define DR_EMPTY (1 << 7)
+#define DR_NOTEMPTY (1 << 6)
+#define ACK_EN (1 << 10) // ACK Enable 
 
 
 template <uintptr_t I2C_ADDR,uintptr_t GPIO_ADDR>
@@ -27,11 +42,11 @@ class HTU31 {
             gpio->MODER |= PIN9ALT_SET;
             gpio->MODER |= PIN8ALT_SET;
 
-            gpio->AFRH &= ~(0xF << (4 * PIN9AF_INDEX));
-            gpio->AFRH &= ~(0xF << (4 * PIN8AF_INDEX));
+            gpio->AFRH &= PIN9AF_CLR;
+            gpio->AFRH &= PIN8AF_CLR;
 
-            gpio->AFRH |= (4 << (4 * PIN9AF_INDEX));
-            gpio->AFRH |= (4 << (4 * PIN8AF_INDEX));
+            gpio->AFRH |= PIN8AF_SET;
+            gpio->AFRH |= PIN9AF_SET;
 
             gpio->OTYPER |= (1 << PIN8) | (1 << PIN9);
             gpio->PUPDR |= (1 << (PIN8 * 2)) | (1 << (PIN9 * 2));
@@ -44,8 +59,8 @@ class HTU31 {
 	        i2c->CR1 |= (1 << 0);
         };
 
-        void read_poll(void);
-        void write_poll(void);
+        void read_poll(const uint8_t readADDR);
+        void write_poll(const uint8_t readADDR,const uint8_t writeCMD);
         uint16_t temp(void);
         uint16_t humid(void);
 
