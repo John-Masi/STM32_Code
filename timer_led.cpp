@@ -1,5 +1,5 @@
 #include "Timer/include/timer.hpp"
-#include "GPIO/Include/gpio.hpp"
+#include "GPIO/Include/leds.hpp"
 
 static volatile uint8_t ticks{};
 static volatile uint8_t led_cnt{};
@@ -25,7 +25,7 @@ void delay(int delay) {
 }
 
 int main() {
-    GPIO<GPIOB> gpio;
+    LEDS<GPIOB,GPIOC> gpio;
     gpio.button_init();
 
     timer.start_timer();

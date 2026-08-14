@@ -41,7 +41,7 @@ void GPIO<BASE,PIN>::alternate_func(void) {
         gpio->AFRL |= (4 << PIN_POS);
     }
     else if (PIN > 7){
-        gpio->AFRH &= ~(0xFF << PIN_POS);
+        gpio->AFRH &= ~(0xF << PIN_POS);
         gpio->AFRH |= (4 << ((PIN_POS - 8) * 2) );
     }
 }

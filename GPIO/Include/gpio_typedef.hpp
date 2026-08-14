@@ -18,6 +18,14 @@ struct GPIO_Typedef {
     volatile uint32_t AFRH;
 };
 
+enum MODER : uint8_t {
+    INPUT = 0b00,
+    OUTPUT = 0b01,
+    ALTERNATE = 0b10,
+    ANALOG = 0b11
+
+};
+
 #define GPIOA 0x40020200
 #define GPIOB 0X40020400
 #define GPIOC 0X40020800

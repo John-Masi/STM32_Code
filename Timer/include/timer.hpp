@@ -20,7 +20,7 @@ class Timer {
 
         void start_timer(void);
         void stop_timer(void);
-        void enable_dma(void);
+        //void enable_dma(void); - TODO: Create individual class for a DMA Timer 
 
     private:
         static constexpr auto timer = reinterpret_cast<TIM_TypeDef*>(BASE);
