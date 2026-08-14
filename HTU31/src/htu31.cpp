@@ -44,7 +44,7 @@ void HTU31<I2C_ADDR,GPIO_ADDR>::write_poll(const uint8_t readADDR,const uint8_t 
     (void)i2c->SR2;
 
     for(volatile int i = 0; i < 5; i++) {
-        while(!(i2c->SR1 & DR_NOTEMPTY);
+        while(!(i2c->SR1 & DR_NOTEMPTY));
         data[i] = i2c->DR;
     }
 
@@ -57,11 +57,21 @@ void HTU31<I2C_ADDR,GPIO_ADDR>::write_poll(const uint8_t readADDR,const uint8_t 
 }
 
 template <uintptr_t I2C_ADDR,uintptr_t GPIO_ADDR>
-uint16_t HTU31<I2C_ADDR,GPIO_ADDR>::temp(void) {
+uint16_t HTU31<I2C_ADDR,GPIO_ADDR>::tempData(void) {
     return ((uint16_t)data[0] << 8) | data[1];
 }
 
 template <uintptr_t I2C_ADDR,uintptr_t GPIO_ADDR>
-uint16_t HTU31<I2C_ADDR,GPIO_ADDR>::humid(void) {
+uint16_t HTU31<I2C_ADDR,GPIO_ADDR>::humidData(void) {
     return ((uint16_t)data[3] << 8) | data[4];
+}
+
+template <uintptr_t I2C_ADDR,uintptr_t GPIO_ADDR>
+void  HTU31<I2C_ADDR,GPIO_ADDR>::tempCalc(uint16_t temp) {
+    this->temperature = (-40.0f + 165.0f) * (((float) temp) / 65535.0f);
+}
+
+template <uintptr_t I2C_ADDR,uintptr_t GPIO_ADDR>
+void  HTU31<I2C_ADDR,GPIO_ADDR>::humidCalc(uint16_t humid) {
+    this->humidity = 100.0f * (((float) humid) / 65535.0f);
 }

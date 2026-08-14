@@ -61,13 +61,17 @@ class HTU31 {
 
         void read_poll(const uint8_t readADDR);
         void write_poll(const uint8_t readADDR,const uint8_t writeCMD);
-        uint16_t temp(void);
-        uint16_t humid(void);
+        uint16_t tempData(void);
+        uint16_t humidData(void);
+        void tempCalc(uint16_t temp);
+        void humidCalc(uint16_t humid);
 
     private:
         static constexpr auto i2c = reinterpret_cast<I2C_Typedef*>(I2C_ADDR);
         static constexpr auto gpio = reinterpret_cast<GPIO_Typedef*>(GPIO_ADDR);
         uint8_t data[6];
+        float temperature;
+        float humidity;
 
 };
 
