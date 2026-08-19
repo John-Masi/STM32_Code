@@ -1,10 +1,10 @@
 #include <cstdint>
 #include <array> 
 #include "gpio_typedef.hpp"
-#include "../syscfg-nvic-rcc/include/rcc.hpp"
-#include "../syscfg-nvic-rcc/include/nvic.hpp"
-#include "../syscfg-nvic-rcc/include/syscfg.hpp"
-#include "../syscfg-nvic-rcc/include/exti.hpp"
+#include "../../syscfg-nvic-rcc/include/rcc.hpp"
+#include "../../syscfg-nvic-rcc/include/nvic.hpp"
+#include "../../syscfg-nvic-rcc/include/syscfg.hpp"
+#include "../../syscfg-nvic-rcc/include/exti.hpp"
 
 #ifndef LEDS_HPP
 #define LEDS_HPP

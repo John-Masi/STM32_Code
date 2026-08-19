@@ -1,8 +1,8 @@
 #include <cstdint>
 #include <memory>
 #include "timer_typedef.hpp"
-#include "../syscfg-nvic-rcc/include/rcc.hpp"
-#include "../syscfg-nvic-rcc/include/nvic.hpp"
+#include "../../syscfg-nvic-rcc/include/rcc.hpp"
+#include "../../syscfg-nvic-rcc/include/nvic.hpp"
 
 #ifndef TIMER_HPP
 #define TIMER_HPP

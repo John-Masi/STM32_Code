@@ -17,6 +17,6 @@ struct TIM_TypeDef {
 #define TIM2 0x40000000 
 #define NVIC_TIM2 28
 #define START (1 << 0)
-#define STOP ~(1 << 0)
+#define STOP (~(1 << 0))
 
 #endif
