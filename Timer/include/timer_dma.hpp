@@ -27,10 +27,12 @@ class Timer_DMA {
             RCC->AHB1ENR |= DMA1_EN;
             timer->PSC = PSC;
             timer->ARR = ARR;
+            timer->DIER |= (1 << 0);
         }
 
         void start(void);
         void stop(void);
+        void dma_copy(void);
     private:
         constexpr static auto timer = reinterpret_cast<TIM_TypeDef*>(ADDR1);
         constexpr static auto dma = reinterpret_cast<DMA_Typedef*>(ADDR2);

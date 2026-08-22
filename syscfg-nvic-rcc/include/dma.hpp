@@ -18,4 +18,7 @@ struct DMA_Typedef {
 	volatile uint32_t S1FCR;
 };
 
+#define DMA2 0x40026400
+#define DMA1 0x40026000
+
 #endif 

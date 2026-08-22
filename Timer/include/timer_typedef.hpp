@@ -8,10 +8,14 @@ struct TIM_TypeDef {
 	volatile uint32_t r[2];
 	volatile uint32_t DIER;
 	volatile uint32_t SR;
-	volatile uint32_t r1[4];
+	volatile uint32_t CCRM1;
+	volatile uint32_t CCRM2;
+	volatile uint32_t CCER;
 	volatile uint32_t CNT;
 	volatile uint32_t PSC;
 	volatile uint32_t ARR;
+	volatile uint32_t CCR1;
+	volatile uint32_t CCR2;
 };
 
 #define TIM2 0x40000000 
