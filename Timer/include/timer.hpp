@@ -23,7 +23,7 @@ class Timer {
         //void enable_dma(void); - TODO: Create individual class for a DMA Timer 
 
     private:
-        static constexpr auto timer = reinterpret_cast<TIM_TypeDef*>(BASE);
+        inline static auto timer = reinterpret_cast<TIM_TypeDef*>(BASE);
 };
 
 #endif 

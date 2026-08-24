@@ -20,7 +20,7 @@ class I2C {
     void validate_address(void);
 
     private:
-        static constexpr auto i2c = reinterpret_cast<I2C_Typedef*>(BASE);
+        inline static auto i2c = reinterpret_cast<I2C_Typedef*>(BASE);
 
 };
 

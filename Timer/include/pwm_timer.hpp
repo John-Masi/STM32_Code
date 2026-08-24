@@ -41,8 +41,8 @@ class PWM_Timer {
 
 
     private:
-        constexpr static auto timer = reinterpret_cast<TIM_TypeDef*>(ADDR);
-        constexpr static auto gpio = reinterpret_cast<GPIO_Typedef*>(ADDR2);
+        inline static auto timer = reinterpret_cast<TIM_TypeDef*>(ADDR);
+        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(ADDR2);
 };
 
 #endif 

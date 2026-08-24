@@ -18,8 +18,8 @@ class LEDS{
         void led_on(uint8_t pin);
 
     private:
-         GPIO_Typedef* gpio_b = reinterpret_cast<GPIO_Typedef*>(ADDR1);
-         GPIO_Typedef* gpio_c = reinterpret_cast<GPIO_Typedef*>(ADDR2);
+         inline static auto gpio_b = reinterpret_cast<GPIO_Typedef*>(ADDR1);
+         inline static auto gpio_c = reinterpret_cast<GPIO_Typedef*>(ADDR2);
 };
 
 #endif 

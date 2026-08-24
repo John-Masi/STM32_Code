@@ -23,7 +23,7 @@ class GPIO {
 
     private:
         const uint8_t PIN_POS{PIN * 2};
-        static constepxr auto gpio = reinterpret_cast<GPIO_Typedef*>(BASE);
+        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(BASE);
 };
 
 #endif 

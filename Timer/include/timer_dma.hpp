@@ -34,8 +34,8 @@ class Timer_DMA {
         void stop(void);
         void dma_copy(void);
     private:
-        constexpr static auto timer = reinterpret_cast<TIM_TypeDef*>(ADDR1);
-        constexpr static auto dma = reinterpret_cast<DMA_Typedef*>(ADDR2);
+        inline static auto timer = reinterpret_cast<TIM_TypeDef*>(ADDR1);
+        inline static auto dma = reinterpret_cast<DMA_Typedef*>(ADDR2);
 };
 
 #endif

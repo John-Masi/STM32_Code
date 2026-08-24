@@ -6,7 +6,7 @@ volatile uint16_t count{0};
 
 template <uintptr_t ADDR,uintptr_t ADDR2,uint8_t PIN>
 static TIM_TypeDef* func(const PWM_Timer<ADDR,ADDR2,PIN>& pwm) {
-    return pwm.timer
+    return pwm.timer;
 }
 
 int main(void) {

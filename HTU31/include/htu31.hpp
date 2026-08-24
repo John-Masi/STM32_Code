@@ -67,8 +67,8 @@ class HTU31 {
         void humidCalc(uint16_t humid);
 
     private:
-        static constexpr auto i2c = reinterpret_cast<I2C_Typedef*>(I2C_ADDR);
-        static constexpr auto gpio = reinterpret_cast<GPIO_Typedef*>(GPIO_ADDR);
+        inline static auto i2c = reinterpret_cast<I2C_Typedef*>(I2C_ADDR);
+        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(GPIO_ADDR);
         uint8_t data[6];
         float temperature;
         float humidity;
