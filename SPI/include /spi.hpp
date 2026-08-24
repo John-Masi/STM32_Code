@@ -1,4 +1,6 @@
 #include "spi_typedef.hpp"
+#include "../../GPIO/Include/gpio_typedef.hpp"
+#include "../../syscfg-nvic-rcc/include/rcc.hpp"
 
 #ifndef SPI_HPP
 #define SPI_HPP
