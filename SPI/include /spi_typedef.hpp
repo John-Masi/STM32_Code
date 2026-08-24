@@ -15,10 +15,13 @@ struct SPI_Typedef {
 
 #define SPI1 0x40013000
 
+
 #define SPI1_EN 12
 #define SPI2_EN 14
 
+// Macros for register values
 #define BR 3
 #define MSTR 2
+#define SPIEN 6 
 
 #endif 

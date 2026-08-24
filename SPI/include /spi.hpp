@@ -13,6 +13,7 @@ class SPI {
 			RCC->APB2ENR |= (1 << SPI1_EN);
 			spi1->CR1 |= (BRVAL << BR);
 			spi1->CR1 |= (1 << MSTR);
+            spi1->CR1 |= (1 << SPIEN);
 		}
 
         uint8_t poll(uint8_t byte) {
@@ -32,25 +33,13 @@ class SPI {
 		void gpio_config(void) {
 			RCC->AHB1ENR |= (1 << GPIOA_EN);
 
-			gpio->MODER &= ~(3 << (4 * 2));
-			gpio->MODER &= ~(3 << (5 * 2));
-			gpio->MODER &= ~(3 << (6 * 2));
-			gpio->MODER &= ~(3 << (7 * 2));
-
-			gpio->MODER |= (2 << (4 * 2));
-			gpio->MODER |= (2 << (5 * 2));
-			gpio->MODER |= (2 << (6 * 2));
-			gpio->MODER |= (2 << (7 * 2));
-
-			gpio->AFRL &= ~(0xF << (4 * 4));
-			gpio->AFRL &= ~(0xF << (5 * 4));
-			gpio->AFRL &= ~(0xF << (6 * 4));
-			gpio->AFRL &= ~(0xF << (7 * 4));
-
-			gpio->AFRL |= (5 << (4 * 4));
-			gpio->AFRL |= (5 << (5 * 4));
-			gpio->AFRL |= (5 << (6 * 4));
-			gpio->AFRL |= (5 << (7 * 4));
+            // Turning on AF for PA4-PA7 
+            for(int i = 4; i <= 7; i++) {
+                gpio->MODER &= ~(3 << (i * 2));
+                gpio->MODER |= (2 << (i * 2));
+                gpio->AFRL &= ~(0xF << (i * 4));
+                gpio->AFRL |= (5 << (i * 4));
+            }
 		}
 
 	private:
