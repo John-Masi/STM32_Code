@@ -54,7 +54,7 @@ extern "C" void EXTI15_10_IRQHandler(void) {
 
 
 int main(void) {
-    led.button_init();
+    led.button_init(0);
 
     while(1) {
         LEDEvent event = check_event();
