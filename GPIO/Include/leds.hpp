@@ -16,6 +16,7 @@ class LEDS{
         void turn_off(void);
         void turn_on(void);
         void led_on(uint8_t pin);
+        void led_off(uint8_t pin);
 
     private:
          inline static auto gpio_b = reinterpret_cast<GPIO_Typedef*>(ADDR1);
