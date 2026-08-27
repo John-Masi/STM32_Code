@@ -12,7 +12,7 @@
 template <uintptr_t ADDR1,uintptr_t ADDR2>
 class LEDS{    
     public:
-        void button_init(uin8_t GPIOEN); 
+        void button_init(uint8_t GPIOEN);
         void turn_off(void);
         void turn_on(void);
         void led_on(uint8_t pin);

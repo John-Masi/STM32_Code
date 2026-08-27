@@ -1,19 +1,19 @@
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <array>
 #include <string_view>
-#include "typedef.hpp"
+#include "usart_typedef.hpp"
 #include "../../syscfg-nvic-rcc/include/rcc.hpp"
 
 #ifndef USART_HPP
 #define USART_HPP
 
+template <uintptr_t ADDR>
 class USART {
     public:
-        USART(USART_Typedef* usart_param) {
-            usart = usart_param;
+        USART() {
             USART_init();
         }
 
@@ -32,12 +32,12 @@ class USART {
         void send_char(char c);
         void get_string(uint8_t maxSize);
         void array_to_str(char * buff);
-        void enable_interrupt(USART_Typedef* usart);
+        void enable_interrupt(void);
         bool parse_string(std::string_view string);
         USART_Typedef* getPerph() { return usart; }
 
     private:
-        USART_Typedef* usart{nullptr};
+        static inline auto usart = reinterpret_cast<USART_Typedef*>(ADDR);
 };
 
 #endif 

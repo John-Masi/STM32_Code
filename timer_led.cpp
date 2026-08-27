@@ -25,8 +25,8 @@ void delay(int delay) {
 }
 
 int main() {
-    LEDS<GPIOB,GPIOC> gpio;
-    gpio.button_init();
+    LEDS<GPIOB,GPIOC> led;
+    led.button_init(0);
 
     timer.start_timer();
 
