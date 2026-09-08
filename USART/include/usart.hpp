@@ -31,10 +31,8 @@ class USART {
         void send_str(std::string_view s);
         void send_char(char c);
         void get_string(uint8_t maxSize);
-        void array_to_str(char * buff);
         void enable_interrupt(void);
         bool parse_string(std::string_view string);
-        USART_Typedef* getPerph() { return usart; }
 
     private:
         static inline auto usart = reinterpret_cast<USART_Typedef*>(ADDR);
