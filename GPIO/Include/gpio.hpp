@@ -1,29 +1,55 @@
-#include <cstdint>
-#include "gpio_typedef.hpp"
-
 #ifndef GPIO_HPP
 #define GPIO_HPP
 
-// Defaults to Pin x Pos 0
-template<uintptr_t BASE,uint8_t PIN = 0>
+#include <cstdint>
+#include "gpio_typedef.hpp"
+#include "../../PIN/include/pin.hpp"
+#include "../../syscfg-nvic-rcc/include/rcc.hpp"
+
+
+template<uintptr_t ADDR,uint8_t RCC_POS>
 class GPIO {
     public:
-        GPIO(uint8_t rcc_pos) {
-            RCC->AHB1ENR |= (1 << rcc_pos);
+        GPIO() {
+            // All gpio ports are default AHB1ENR on target mmcu 
+            RCC->AHB1ENR |= (1 << RCC_POS);
         };
-        void pin_on(void);
-        void pin_off(void);
-        void open_drain(void);
-        void push_pull(void);
-        void pullup_en(void);
-        void pulldown_en(void);
-        void alternate_func(void);
-        void set_output(void);
+        void output_on(const Pin& pin) const {
+            gpio->ODR |= (1 << pin.num);
+        }
+
+        void output_off(const Pin& pin) const {
+            gpio->ODR &= ~(1 << pin.num);
+        };
+
+        void open_drain(const Pin& pin) const {
+            gpio->OTYPER |= (1 << pin.num);
+        };
+
+        void pullup_en(const Pin& pin) const {
+            gpio->PUPDR |= (0b01 << pin.MODERMSK);
+        };
+
+        void set_mode(const Pin& pin) {
+            gpio->MODER &= (3 << pin.MODERMSK)
+            gpio->MODER |= (pin.mode << pin.MODERMSK);
+
+            if constexpr(pin.mode == Mode::ALTERNATE) {
+                if(pin.num >= 0 && pin.num <= 6) {
+                    // AFRL 
+                    gpio->AFRL &= ~(0xF << pin.AFRMSK);
+                    gpio->AFRL |= (pin.AF << pin.AFRMSK);
+                }
+                else if(pin.num >= 7 && pin.num <= 15) {
+                    gpio->AFRH &= ~(0xF << pin.AFRMSK);
+                    gpio->AFRH |= (pin.AF << pin.AFRMSK);
+                }
+            }
+        };
 
 
     private:
-        const uint8_t PIN_POS{PIN * 2};
-        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(BASE);
+        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(ADDR);
 };
 
 #endif 

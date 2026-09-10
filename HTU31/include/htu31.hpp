@@ -1,10 +1,12 @@
-#include <cstdint>
-#include "../I2C/include/i2c.hpp"
-#include "../GPIO/Include/gpio.hpp"
-#include "../syscfg-nvic-rcc/include/rcc.hpp"
-
 #ifndef HTU31_HPP
 #define HTU31_HPP
+
+#include <cstdint>
+#include "../../I2C/include/i2c.hpp"
+#include "../../GPIO/Include/gpio.hpp"
+#include "../../syscfg-nvic-rcc/include/rcc.hpp"
+
+#define BIT(x) (1U << X);
 
 // Macros for GPIOB pins 8,9
 #define PIN9 9

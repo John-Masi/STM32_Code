@@ -25,14 +25,13 @@ void delay(int delay) {
 }
 
 int main() {
-    LEDS<GPIOB,GPIOC> led;
-    led.button_init(0);
+    LEDS<GPIOB,GPIOC,4> led;
 
     timer.start_timer();
 
     while(1) {
         if(ticks == 1) {
-            gpio.led_on(led_cnt);
+            led.led_on(led_cnt);
             led_cnt++;
             count++;
             ticks = 0;
@@ -42,10 +41,10 @@ int main() {
         }
 
         if(count >= 11) {
-            gpio.turn_on();
+            led.all_on();
             delay(100000);
             timer.stop_timer();
-            gpio.turn_off();
+            led.all_off();
             count = 0;
         }
     }

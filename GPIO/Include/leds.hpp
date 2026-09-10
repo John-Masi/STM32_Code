@@ -1,26 +1,70 @@
+#ifndef LEDS_HPP
+#define LEDS_HPP
+
 #include <cstdint>
 #include <array> 
 #include "gpio_typedef.hpp"
+#include "gpio.hpp"
+#include "../../PIN/include/pin.hpp"
 #include "../../syscfg-nvic-rcc/include/rcc.hpp"
 #include "../../syscfg-nvic-rcc/include/nvic.hpp"
 #include "../../syscfg-nvic-rcc/include/syscfg.hpp"
 #include "../../syscfg-nvic-rcc/include/exti.hpp"
 
-#ifndef LEDS_HPP
-#define LEDS_HPP
 
-template <uintptr_t ADDR1,uintptr_t ADDR2>
+template <uintptr_t ADDR1,uintptr_t ADDR2,uint8_t PINTAMT>
 class LEDS{    
     public:
-        void button_init(uint8_t GPIOEN);
-        void turn_off(void);
-        void turn_on(void);
-        void led_on(uint8_t pin);
-        void led_off(uint8_t pin);
+
+        LEDS() {
+            initalize_pins();
+            button_init();
+        }
+
+        void button_init(void) {
+            RCC->APB2ENR |= (1 << SYSCFGEN);
+
+            gpiob.set_mode(bttn_pin);
+
+            SYSCFG->EXTICR4 |= (0x2 << 4);
+
+            EXTI->IMR |= (1 << 13);
+            EXTI->FTSR |= (1 << 13);
+
+            NVIC->ISER0[1] |= (1 << 8);
+        }
+
+        void initalize_pins(uint8_t num1,uint8_t num2, uint8_t num3,uint8_t num4) {
+            for(volatile int i = 0; i < PINTAMT; i++) {
+                led_pins[i] = Pin(i,INPUT);
+            }
+        }
+
+        void all_off(void) {
+            for(volatile int i = 0; i < PINTAMT; i++) {
+                gpioa.output_off(led_pins[i]);
+            }
+        }
+
+        void all_on(void) {
+            for(volatile int i = 0; i < PINTAMT; i++) {
+                gpioa.output_on(led_pins[i]);
+            }
+        }
+
+        void led_on(uint8_t pinNum) {
+            gpioa.output_on(led_pins[pinNum]);
+        }
+
+        void led_off(uint8_t pinNum) {
+            gpioa.output_off(led_pins[pinNum]);
+        }
 
     private:
-         inline static auto gpio_1 = reinterpret_cast<GPIO_Typedef*>(ADDR1);
-         inline static auto gpio_2 = reinterpret_cast<GPIO_Typedef*>(ADDR2);
+         GPIO<ADDR1,0> gpioa;
+         GPIO<ADDR2,2> gpiob;
+         Pin led_pins[PINTAMT];
+         Pin bttn_pin(13,Mode::INPUT);
 };
 
 #endif 

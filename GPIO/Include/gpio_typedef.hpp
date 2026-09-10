@@ -1,7 +1,7 @@
-#include <cstdint>
-
 #ifndef GPIO_TYPEDEF_HPP
 #define GPIO_TYPEDEF_HPP
+
+#include <cstdint>
 
 struct GPIO_Typedef {
     volatile uint32_t MODER;
@@ -16,14 +16,6 @@ struct GPIO_Typedef {
     volatile uint32_t LCKR;
     volatile uint32_t AFRL;
     volatile uint32_t AFRH;
-};
-
-enum MODER : uint8_t {
-    INPUT = 0b00,
-    OUTPUT = 0b01,
-    ALTERNATE = 0b10,
-    ANALOG = 0b11
-
 };
 
 #define GPIOA 0x40020200
