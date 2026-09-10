@@ -5,7 +5,7 @@ Code written and tested on a NUCLEO-F446RE
 
 General drivers for peripherals 
 
-Included drivers are USART, I^2C, driver for an HTU31 using I^2C, GPIO, TIMER, PWM, SPI.
+Included drivers are USART, I^2C, driver for an HTU31 using I^2C, GPIO, TIMER, PWM, SPI,ADC.
 
 Some basic .cpp files containing the use of some drivers. 
 All drivers have been used and tested in STM32IDE on the mmcu.
