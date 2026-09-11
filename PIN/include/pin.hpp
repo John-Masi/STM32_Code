@@ -10,18 +10,14 @@ enum class Mode : uint8_t {
     ANALOG
 };
 
+template <uint8_t num,Mode moder,uint8_t af = 0>
 struct Pin {
-    uint8_t num{};
-    Mode moder{};
-    uint8_t AF{};
+    static constexpr uint8_t num{num};
+    static constexpr Mode moder{moder};
+    static constexpr uint8_t AF{af};
 
-    uint8_t MODERMSK{};
-    uint8_t AFRMSK{};
-
-     Pin(uint8_t n,Mode mode,uint8_t af = 0) : num(n), moder(mode), AF(af) {
-        MODERMSK = (num * 2);
-        AFRMSK = (num * 4);
-    }
+    static constexpr uint8_t MODERMSK{num * 2};
+    static constexpr uint8_t AFRMSK{num * 4};
 };
 
 #endif 

@@ -12,37 +12,43 @@ class GPIO {
     public:
         GPIO() {
             // All gpio ports are default AHB1ENR on target mmcu 
-            RCC->AHB1ENR |= (1 << RCC_POS);
+            RCC->AHB1ENR |= (1U << RCC_POS);
         };
-        void output_on(const Pin& pin) const {
-            gpio->ODR |= (1 << pin.num);
+
+        template<typename... Pins>
+        void output_on(void) const {
+            gpio->BSSR = (Pins::num | ...);
         }
 
-        void output_off(const Pin& pin) const {
-            gpio->ODR &= ~(1 << pin.num);
+        template<typename pin>
+        void output_off(void) const {
+            gpio->ODR &= ~(1U << pin::num);
         };
 
-        void open_drain(const Pin& pin) const {
-            gpio->OTYPER |= (1 << pin.num);
+        template<typename pin>
+        void open_drain(void) const {
+            gpio->OTYPER |= (1U << pin::num);
         };
 
-        void pullup_en(const Pin& pin) const {
-            gpio->PUPDR |= (0b01 << pin.MODERMSK);
+        template<typename pin>
+        void pullup_en(void) const {
+            gpio->PUPDR |= (0b01 << pin::MODERMSK);
         };
 
-        void set_mode(const Pin& pin) {
-            gpio->MODER &= (3 << pin.MODERMSK)
-            gpio->MODER |= (pin.mode << pin.MODERMSK);
+        template<typename pin>
+        static void set_mode() {
+            gpio->MODER &= (3U << pin::MODERMSK)
+            gpio->MODER |= (pin::mode << pin::MODERMSK);
 
-            if constexpr(pin.mode == Mode::ALTERNATE) {
-                if(pin.num >= 0 && pin.num <= 6) {
+            if constexpr(pin::mode == Mode::ALTERNATE) {
+                if constexpr (pin::num <= 6) {
                     // AFRL 
-                    gpio->AFRL &= ~(0xF << pin.AFRMSK);
-                    gpio->AFRL |= (pin.AF << pin.AFRMSK);
+                    gpio->AFRL &= ~(0xFU << pin::AFRMSK);
+                    gpio->AFRL |= (pin::AF << pin::AFRMSK);
                 }
-                else if(pin.num >= 7 && pin.num <= 15) {
-                    gpio->AFRH &= ~(0xF << pin.AFRMSK);
-                    gpio->AFRH |= (pin.AF << pin.AFRMSK);
+                else {
+                    gpio->AFRH &= ~(0xFU << pin::AFRMSK);
+                    gpio->AFRH |= (pin::AF << pin::AFRMSK);
                 }
             }
         };
