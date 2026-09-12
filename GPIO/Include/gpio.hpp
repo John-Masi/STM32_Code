@@ -11,38 +11,45 @@ template<uintptr_t ADDR,uint8_t RCC_POS>
 class GPIO {
     public:
         GPIO() {
-            // All gpio ports are default AHB1ENR on target mmcu 
-            RCC->AHB1ENR |= (1U << RCC_POS);
+            RCC->AHB1ENR |= (1 << RCC_POS);
         };
 
         template<typename... Pins>
-        void output_on(void) const {
-            gpio->BSSR = (Pins::num | ...);
+        inline void output_on(void) {
+        	constexpr uint32_t mask = ((1U << Pins::num) | ...);
+        	gpio->ODR = mask;
         }
 
-        template<typename pin>
-        void output_off(void) const {
-            gpio->ODR &= ~(1U << pin::num);
+        template<typename... Pins>
+        void output_off() {
+        	constexpr uint32_t mask = (~(1U << Pins::num) & ...);
+        	gpio->ODR = mask;
         };
 
+       template<typename... Pins>
+       void output_toggle(void) {
+    	   constexpr uint32_t mask = ((1U << Pins::num) | ...);
+    	   gpio->ODR ^= mask;
+       }
+
         template<typename pin>
-        void open_drain(void) const {
+        void open_drain() const {
             gpio->OTYPER |= (1U << pin::num);
         };
 
         template<typename pin>
-        void pullup_en(void) const {
+        void pullup_en() const {
             gpio->PUPDR |= (0b01 << pin::MODERMSK);
         };
 
         template<typename pin>
-        static void set_mode() {
-            gpio->MODER &= (3U << pin::MODERMSK)
-            gpio->MODER |= (pin::mode << pin::MODERMSK);
+        void set_mode(void) {
+            gpio->MODER &= ~(3 << pin::MODERMSK);
+            gpio->MODER |= (static_cast<uint8_t>(pin::moder) << pin::MODERMSK);
 
-            if constexpr(pin::mode == Mode::ALTERNATE) {
-                if constexpr (pin::num <= 6) {
-                    // AFRL 
+            if constexpr(pin::moder == Mode::ALTERNATE) {
+                if constexpr(pin::num <= 6) {
+                    // AFRL
                     gpio->AFRL &= ~(0xFU << pin::AFRMSK);
                     gpio->AFRL |= (pin::AF << pin::AFRMSK);
                 }
@@ -55,7 +62,7 @@ class GPIO {
 
 
     private:
-        inline static auto gpio = reinterpret_cast<GPIO_Typedef*>(ADDR);
+        GPIO_Typedef* gpio = reinterpret_cast<GPIO_Typedef*>(ADDR);
 };
 
-#endif 
+#endif
