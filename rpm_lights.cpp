@@ -23,7 +23,7 @@ namespace RPM_LIGHTS {
 
     GPIO<GPIOA,GPIOAEN> gpioa;
     GPIO<GPIOC,GPIOCEN> gpioc;
-    ADC<ADC1,true,0> adc1;
+    ADC<ADC1,0> adc1;
 
     template<typename... Pins>
     inline void init_a(void) {
@@ -82,11 +82,12 @@ namespace RPM_LIGHTS {
     }
 }
 
+
 volatile uint16_t value = 0;
 extern "C" void ADC_IRQHandler(void) {
-		if(RPM_LIGHTS::adc1.adc->SR & (1 << 1)) {
-			value = RPM_LIGHTS::adc1.adc->DR;
-			RPM_LIGHTS::adc1.adc->CR2 |= (1 << 30);
+		if(RPM_LIGHTS::adc1.get_EOC()) {
+			value = RPM_LIGHTS::adc1.get_data();
+			RPM_LIGHTS::adc1.start_conversation();
 		}
 }
 
